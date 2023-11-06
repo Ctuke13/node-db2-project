@@ -31,19 +31,13 @@ router.get("/:id", checkCarId, async (req, res, next) => {
 router.post(
   "/",
   checkCarPayload,
-  checkVinNumberUnique,
   checkVinNumberValid,
+  checkVinNumberUnique,
   async (req, res, next) => {
-    const { vin, make, model, mileage, title, transmission } = req.body;
+    // const { vin, make, model, mileage, title, transmission } = req.body;
     try {
-      const car = await Cars.create({
-        vin: vin,
-        make: make,
-        model: model,
-        mileage: mileage,
-        title: title,
-        transmission: transmission,
-      });
+      const car = await Cars.create(req.body);
+      console.log(car);
       res.status(201).json(car);
     } catch (err) {
       next(err);
